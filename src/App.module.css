@@ -1,0 +1,12 @@
+.title {
+  margin: 0;
+  margin-bottom: 20px;
+  text-align: center;
+  color: rgb(47, 47, 177);
+}
+
+:global(.container) {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}

@@ -1,0 +1,48 @@
+.form {
+  margin-bottom: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.label {
+  margin: 0;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+.input {
+  width: 100%;
+  border-radius: 6px;
+  padding: 5px;
+  margin-bottom: 10px;
+  outline: none;
+  border: 3px solid black;
+}
+
+.input:focus,
+.input:hover,
+.input:not(:placeholder-shown) {
+  border: 3px solid yellowgreen;
+  border-radius: 6px;
+}
+
+.button {
+  padding: 8px 15px;
+  border-radius: 8px;
+  background-color: yellowgreen;
+  color: azure;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus {
+  background-color: azure;
+  color: yellowgreen;
+}
+
+.error{
+  font-size: 24px;
+  color: red;
+  text-align: center;
+}

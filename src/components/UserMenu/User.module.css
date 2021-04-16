@@ -1,0 +1,33 @@
+.wrapUserMenu{
+  display: flex;
+  align-items:center;  
+}
+
+
+.icon{
+    width: 60px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.welcome{
+    margin-right: 20px;
+    font-weight: 700;
+    font-size: 16px;
+    color: rgb(47, 47, 177);
+}
+
+
+.button {
+  padding: 8px 15px;
+  border-radius: 8px;
+  background-color: yellowgreen;
+  color: azure;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus {
+  background-color: azure;
+  color: yellowgreen;
+}
