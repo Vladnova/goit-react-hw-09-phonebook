@@ -7,6 +7,9 @@ import {
   addContactRequest,
   addContactSuccess,
   addContactError,
+  editContactRequest,
+  editContactSuccess,
+  editContactError,
   removeContactRequest,
   removeContactSuccess,
   removeContactError,
@@ -16,8 +19,13 @@ import {
 const itemReducer = createReducer([], {
   [fetchContactSuccess]: (_, { payload }) => payload,
   [addContactSuccess]: (state, { payload }) => [...state, payload],
+
   [removeContactSuccess]: (state, { payload }) =>
     state.filter(({ id }) => id !== payload),
+});
+
+const editReducer = createReducer([], {
+  [editContactSuccess]: (_, { payload }) => payload,
 });
 
 const filterReducer = createReducer('', {
@@ -31,6 +39,9 @@ const isLoading = createReducer(false, {
   [addContactRequest]: () => true,
   [addContactSuccess]: () => false,
   [addContactError]: () => false,
+  [editContactRequest]: () => true,
+  [editContactSuccess]: () => false,
+  [editContactError]: () => false,
   [removeContactRequest]: () => true,
   [removeContactSuccess]: () => false,
   [removeContactError]: () => false,
@@ -38,6 +49,7 @@ const isLoading = createReducer(false, {
 
 export default combineReducers({
   items: itemReducer,
+  saveContact: editReducer,
   filter: filterReducer,
   isLoading,
 });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { contactsOperations, contactsSelectors } from '../../redux/contacts';
 import styles from './ContactForm.module.css';
@@ -7,7 +7,20 @@ const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const itemContacts = useSelector(contactsSelectors.allContacts);
+  const nameEdit = useSelector(contactsSelectors.getEditName);
+  const numberEdit = useSelector(contactsSelectors.getEditNumber);
+  const idContact = useSelector(contactsSelectors.id);
   const dispatch = useDispatch();
+
+  const edit = () => {
+    nameEdit && setName(nameEdit);
+    numberEdit && setNumber(numberEdit);
+  };
+
+  // useEffect(() => {
+  //   nameEdit && setName(nameEdit);
+  //   numberEdit && setNumber(numberEdit);
+  // }, [nameEdit, numberEdit]);
 
   const handleNameChange = e => setName(e.currentTarget.value);
   const handleNumberChange = e => setNumber(e.currentTarget.value);
@@ -20,6 +33,12 @@ const ContactForm = () => {
       ? alert(`${name} is already in contacts`)
       : dispatch(contactsOperations.addContact({ name, number }));
     resetSubmit();
+  };
+
+  const editContact = (idContact, { nameEdit, numberEdit }) => {
+    dispatch(
+      contactsOperations.editContact(idContact, { nameEdit, numberEdit }),
+    );
   };
 
   const resetSubmit = () => {
@@ -56,13 +75,24 @@ const ContactForm = () => {
         />
       </label>
 
-      <button
-        className={styles.button}
-        type="submit"
-        disabled={!name || !number}
-      >
-        Add contact
-      </button>
+      {nameEdit ? (
+        <button
+          className={styles.button}
+          type="button"
+          disabled={!name || !number}
+          onClick={editContact}
+        >
+          Save
+        </button>
+      ) : (
+        <button
+          className={styles.button}
+          type="submit"
+          disabled={!name || !number}
+        >
+          Add contact
+        </button>
+      )}
     </form>
   );
 };

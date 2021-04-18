@@ -6,6 +6,9 @@ import {
   addContactRequest,
   addContactSuccess,
   addContactError,
+  editContactRequest,
+  editContactSuccess,
+  editContactError,
   removeContactRequest,
   removeContactSuccess,
   removeContactError,
@@ -28,6 +31,15 @@ const addContact = stateForm => dispatch => {
     .catch(error => dispatch(addContactError(error)));
 };
 
+const editContact = (id, body) => dispatch => {
+  console.log(body);
+  dispatch(editContactRequest());
+  axios
+    .patch(`/contacts/${id}`, body)
+    .then(({ data }) => dispatch(editContactSuccess(data)))
+    .catch(error => dispatch(editContactError(error)));
+};
+
 const removeContact = id => dispatch => {
   dispatch(removeContactRequest());
   axios
@@ -36,4 +48,4 @@ const removeContact = id => dispatch => {
     .catch(error => dispatch(removeContactError(error)));
 };
 
-export default { addContact, removeContact, fetchContacts };
+export default { addContact, removeContact, fetchContacts, editContact };
