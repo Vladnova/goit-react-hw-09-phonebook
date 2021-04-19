@@ -6,9 +6,10 @@ import {
   addContactRequest,
   addContactSuccess,
   addContactError,
-  editContactRequest,
   editContactSuccess,
-  editContactError,
+  patchContactRequest,
+  patchContactSuccess,
+  patchContactError,
   removeContactRequest,
   removeContactSuccess,
   removeContactError,
@@ -31,13 +32,18 @@ const addContact = stateForm => dispatch => {
     .catch(error => dispatch(addContactError(error)));
 };
 
+const saveEditContact = (id, name, number) => dispatch => {
+  dispatch(editContactSuccess({ id, name, number }));
+};
+
 const editContact = (id, body) => dispatch => {
-  console.log(body);
-  dispatch(editContactRequest());
+  dispatch(patchContactRequest());
   axios
     .patch(`/contacts/${id}`, body)
-    .then(({ data }) => dispatch(editContactSuccess(data)))
-    .catch(error => dispatch(editContactError(error)));
+    .then(({ data }) => {
+      dispatch(patchContactSuccess(data));
+    })
+    .catch(error => dispatch(patchContactError(error)));
 };
 
 const removeContact = id => dispatch => {
@@ -48,4 +54,10 @@ const removeContact = id => dispatch => {
     .catch(error => dispatch(removeContactError(error)));
 };
 
-export default { addContact, removeContact, fetchContacts, editContact };
+export default {
+  addContact,
+  removeContact,
+  fetchContacts,
+  editContact,
+  saveEditContact,
+};

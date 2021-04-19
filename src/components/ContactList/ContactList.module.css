@@ -32,3 +32,39 @@ p {
   background-color: yellowgreen;
   border: 2px solid black;
 }
+
+
+.IconButtonDel {
+  margin: 0;
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+  color: black;
+  font: inherit;
+  background-color: inherit;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.IconButtonDel:hover,
+.IconButtonDel:focus {
+  color: yellowgreen;  
+}
+
+.IconButtonEdit{  
+  margin-left: auto;
+  font: inherit;
+  background-color: inherit;
+  cursor: pointer;
+  border: none;
+  transition: 350ms cubic-bezier(0.39, 0.575, 0.565, 1);
+  
+}
+
+.IconButtonEdit:hover,
+.IconButtonEdit:focus {
+  transform: scale(1.3); 
+}

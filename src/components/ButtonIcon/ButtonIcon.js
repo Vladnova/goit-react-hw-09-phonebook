@@ -1,14 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './ButtonIcon.module.css';
 
-const ButtonIcon = ({ children, onClick, ...allyProps }) => (
-  <button
-    type="button"
-    className={styles.IconButton}
-    onClick={onClick}
-    {...allyProps}
-  >
+const ButtonIcon = ({ children, onClick, className, ...allyProps }) => (
+  <button type="button" className={className} onClick={onClick} {...allyProps}>
     {children}
   </button>
 );

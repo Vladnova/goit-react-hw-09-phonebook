@@ -7,9 +7,10 @@ import {
   addContactRequest,
   addContactSuccess,
   addContactError,
-  editContactRequest,
+  patchContactRequest,
+  patchContactSuccess,
+  patchContactError,
   editContactSuccess,
-  editContactError,
   removeContactRequest,
   removeContactSuccess,
   removeContactError,
@@ -19,14 +20,20 @@ import {
 const itemReducer = createReducer([], {
   [fetchContactSuccess]: (_, { payload }) => payload,
   [addContactSuccess]: (state, { payload }) => [...state, payload],
+  [patchContactSuccess]: (state, { payload }) =>
+    state.map(contact => (contact.id === payload.id ? payload : contact)),
 
   [removeContactSuccess]: (state, { payload }) =>
     state.filter(({ id }) => id !== payload),
 });
 
-const editReducer = createReducer([], {
-  [editContactSuccess]: (_, { payload }) => payload,
-});
+const editReducer = createReducer(
+  {},
+  {
+    [editContactSuccess]: (_, { payload }) => payload,
+    [patchContactSuccess]: (_, { payload }) => (payload = {}),
+  },
+);
 
 const filterReducer = createReducer('', {
   [onChangeFilter]: (_, { payload }) => payload,
@@ -39,9 +46,9 @@ const isLoading = createReducer(false, {
   [addContactRequest]: () => true,
   [addContactSuccess]: () => false,
   [addContactError]: () => false,
-  [editContactRequest]: () => true,
-  [editContactSuccess]: () => false,
-  [editContactError]: () => false,
+  [patchContactRequest]: () => true,
+  [patchContactSuccess]: () => false,
+  [patchContactError]: () => false,
   [removeContactRequest]: () => true,
   [removeContactSuccess]: () => false,
   [removeContactError]: () => false,

@@ -1,26 +1,15 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import ButtonIcon from '../ButtonIcon/ButtonIcon';
 import { useSelector, useDispatch } from 'react-redux';
 import { contactsOperations, contactsSelectors } from '../../redux/contacts';
 import { ReactComponent as Delete } from '../../icon/delete.svg';
 import { ReactComponent as Edit } from '../../icon/pencil.svg';
 import styles from './ContactList.module.css';
-import edit from '../ContactForm/ContactForm';
 
 const ContactList = () => {
   const contacts = useSelector(contactsSelectors.getVisibleContacts);
   const dispatch = useDispatch();
-  const nameEdit = useSelector(contactsSelectors.getEditName);
-  const numberEdit = useSelector(contactsSelectors.getEditNumber);
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const idContact = useSelector(contactsSelectors.id);
 
-  // const edit = () => {
-  //   nameEdit && setName(name);
-  //   numberEdit && setName(number);
-  // };
   return (
     <ul className={[styles.containerList, 'container'].join(' ')}>
       {contacts.map(({ id, name, number }) => (
@@ -28,11 +17,18 @@ const ContactList = () => {
           <p>
             {name}: {number}
           </p>
-          <ButtonIcon onClick={edit} aria-label="Edit">
+          <ButtonIcon
+            onClick={() =>
+              dispatch(contactsOperations.saveEditContact(id, name, number))
+            }
+            className={styles.IconButtonEdit}
+            aria-label="Edit"
+          >
             <Edit width="25" height="25" />
           </ButtonIcon>
           <ButtonIcon
             onClick={() => dispatch(contactsOperations.removeContact(id))}
+            className={styles.IconButtonDel}
             aria-label="Delete"
           >
             <Delete width="25" height="25" />

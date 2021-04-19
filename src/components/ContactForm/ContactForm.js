@@ -12,33 +12,28 @@ const ContactForm = () => {
   const idContact = useSelector(contactsSelectors.id);
   const dispatch = useDispatch();
 
-  const edit = () => {
+  useEffect(() => {
     nameEdit && setName(nameEdit);
     numberEdit && setNumber(numberEdit);
-  };
-
-  // useEffect(() => {
-  //   nameEdit && setName(nameEdit);
-  //   numberEdit && setNumber(numberEdit);
-  // }, [nameEdit, numberEdit]);
+  }, [nameEdit, numberEdit]);
 
   const handleNameChange = e => setName(e.currentTarget.value);
   const handleNumberChange = e => setNumber(e.currentTarget.value);
 
   const handleSubmit = e => {
     e.preventDefault();
+
+    if (!!idContact) {
+      dispatch(contactsOperations.editContact(idContact, { name, number }));
+      resetSubmit();
+      return;
+    }
     const allNames = itemContacts.map(({ name }) => name);
 
     allNames.includes(name)
       ? alert(`${name} is already in contacts`)
       : dispatch(contactsOperations.addContact({ name, number }));
     resetSubmit();
-  };
-
-  const editContact = (idContact, { nameEdit, numberEdit }) => {
-    dispatch(
-      contactsOperations.editContact(idContact, { nameEdit, numberEdit }),
-    );
   };
 
   const resetSubmit = () => {
@@ -74,25 +69,13 @@ const ContactForm = () => {
           onChange={handleNumberChange}
         />
       </label>
-
-      {nameEdit ? (
-        <button
-          className={styles.button}
-          type="button"
-          disabled={!name || !number}
-          onClick={editContact}
-        >
-          Save
-        </button>
-      ) : (
-        <button
-          className={styles.button}
-          type="submit"
-          disabled={!name || !number}
-        >
-          Add contact
-        </button>
-      )}
+      <button
+        className={styles.button}
+        type="submit"
+        disabled={!name || !number}
+      >
+        {!!idContact ? 'Save' : 'Add contact'}
+      </button>
     </form>
   );
 };
