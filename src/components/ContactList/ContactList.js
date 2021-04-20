@@ -10,6 +10,19 @@ const ContactList = () => {
   const contacts = useSelector(contactsSelectors.getVisibleContacts);
   const dispatch = useDispatch();
 
+  const onDelete = e => {
+    const id = e.target.dataset.id;
+    dispatch(contactsOperations.removeContact(id));
+  };
+
+  const onEdit = e => {
+    const contact = e.target.dataset.contact.split(',');
+    const id = contact[0];
+    const name = contact[1];
+    const number = contact[2];
+    dispatch(contactsOperations.saveEditContact(id, name, number));
+  };
+
   return (
     <ul className={[styles.containerList, 'container'].join(' ')}>
       {contacts.map(({ id, name, number }) => (
@@ -18,20 +31,20 @@ const ContactList = () => {
             {name}: {number}
           </p>
           <ButtonIcon
-            onClick={() =>
-              dispatch(contactsOperations.saveEditContact(id, name, number))
-            }
+            onClick={onEdit}
             className={styles.IconButtonEdit}
             aria-label="Edit"
+            data-contact={[id, name, number]}
           >
-            <Edit width="25" height="25" />
+            <Edit className={styles.icon} width="25" height="25" />
           </ButtonIcon>
           <ButtonIcon
-            onClick={() => dispatch(contactsOperations.removeContact(id))}
+            onClick={onDelete}
             className={styles.IconButtonDel}
             aria-label="Delete"
+            data-id={id}
           >
-            <Delete width="25" height="25" />
+            <Delete className={styles.icon} width="25" height="25" />
           </ButtonIcon>
         </li>
       ))}
